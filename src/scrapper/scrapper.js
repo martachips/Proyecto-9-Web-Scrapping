@@ -37,10 +37,24 @@ const scrapper = async (url) => {
 
       arrayProducts.push(productObject);
     }
-    await mongoose.connect(process.env.DB_URL);
-    await Product.insertMany(arrayProducts);
-    await mongoose.disconnect();
-    await browser.close();
+    await mongoose
+      .connect(process.env.DB_URL)
+      .then(async () => {
+        const allProducts = await Product.find();
+        if (allProducts.length) {
+          await Product.collection.drop();
+        }
+      })
+      .catch((error) => console.log(`Error deleting data: ${error}`))
+      .then(async () => {
+        await Product.insertMany(arrayProducts);
+        console.log('Inserted');
+      })
+      .catch((error) => console.log(`Error creating data: ${error}`))
+      .finally(() => {
+        mongoose.disconnect();
+        browser.close();
+      });
 
     //! (function "write" creates products.json file)
     write(arrayProducts);
