@@ -2,7 +2,6 @@ require('dotenv').config();
 const productRoute = require('./src/api/routes/product');
 const { connectDB } = require('./src/config/db');
 const express = require('express');
-const { scrapper } = require('./src/scrapper/scrapper');
 
 const app = express();
 connectDB();

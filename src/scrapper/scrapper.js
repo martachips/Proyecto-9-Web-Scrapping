@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const mongoose = require('mongoose');
 const Product = require('../api/models/product');
 const fs = require('fs');
+require('dotenv').config();
 
 const arrayProducts = [];
 
@@ -70,5 +71,3 @@ const write = (products) => {
     console.log('Aparcao');
   });
 };
-
-module.exports = { scrapper };

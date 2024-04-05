@@ -1,5 +1,5 @@
 const Product = require('../models/product');
-const products = require('../../../products.json');
+require('dotenv').config();
 
 const getProducts = async (req, res, next) => {
   try {
@@ -10,14 +10,4 @@ const getProducts = async (req, res, next) => {
   }
 };
 
-const postProduct = async (req, res, next) => {
-  try {
-    await Product.insertMany(products.products);
-    return res.status(201).json('Products inserted');
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json(`Request error: ${error}`);
-  }
-};
-
-module.exports = { getProducts, postProduct };
+module.exports = { getProducts };
